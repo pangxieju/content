@@ -215,22 +215,24 @@ It should be inserted after the `fetch()`.
 ## Example
 
 ```js
-const articles = await this.$content('articles')
-  .only(['title', 'date', 'authors'])
-  .sortBy('date', 'asc')
-  .limit(5)
-  .skip(10)
-  .where({
-    tags: 'testing',
-    isArchived: false,
-    date: { $gt: new Date(2020) },
-    rating: { $gte: 3 }
-  })
-  .search('welcome')
-  .fetch()
-  .catch((err) => {
-     error({ statusCode: 404, message: 'Page not found' })
-  })
+async asyncData({ $content, error }) {
+  const articles = await this.$content('articles')
+    .only(['title', 'date', 'authors'])
+    .sortBy('date', 'asc')
+    .limit(5)
+    .skip(10)
+    .where({
+      tags: 'testing',
+      isArchived: false,
+      date: { $gt: new Date(2020) },
+      rating: { $gte: 3 }
+    })
+    .search('welcome')
+    .fetch()
+    .catch((err) => {
+       error({ statusCode: 404, message: 'Page not found' })
+    })
+  }
 ```
 
 > You can check how to use the [Content API](/advanced#api-endpoint) in development.
